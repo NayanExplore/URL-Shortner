@@ -34,8 +34,13 @@ const ShortenItem = ({ originalUrl, shortUrl, clickCount, createdDate }) => {
 
     const fetchMyShortUrl = async () => {
         setLoader(true);
+        // Dynamic date range: 1 year ago → end of current year
+        const now = new Date();
+        const startDate = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate())
+            .toISOString().split(".")[0];
+        const endDate = `${now.getFullYear()}-12-31T23:59:59`;
         try {
-             const { data } = await api.get(`/api/urls/analytics/${selectedUrl}?startDate=2024-12-01T00:00:00&endDate=2025-12-31T23:59:59`, {
+             const { data } = await api.get(`/api/urls/analytics/${selectedUrl}?startDate=${startDate}&endDate=${endDate}`, {
                         headers: {
                           "Content-Type": "application/json",
                           Accept: "application/json",
