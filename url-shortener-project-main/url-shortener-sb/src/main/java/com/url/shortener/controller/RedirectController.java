@@ -9,11 +9,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @AllArgsConstructor
 public class RedirectController {
 
     private UrlMappingService urlMappingService;
+
+    @GetMapping("/")
+    public ResponseEntity<Map<String, String>> root() {
+        return ResponseEntity.ok(Map.of(
+                "status", "UP",
+                "message", "URL Shortener Backend API is running successfully!"
+        ));
+    }
 
     @GetMapping("/{shortUrl}")
     public ResponseEntity<Void> redirect(@PathVariable String shortUrl){
