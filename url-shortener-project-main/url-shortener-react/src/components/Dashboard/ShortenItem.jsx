@@ -69,31 +69,26 @@ const ShortenItem = ({ originalUrl, shortUrl, clickCount, createdDate }) => {
   return (
     <div className={`bg-slate-100 shadow-lg border border-dotted  border-slate-500 px-6 sm:py-1 py-3 rounded-md  transition-all duration-100 `}>
     <div className={`flex sm:flex-row flex-col  sm:justify-between w-full sm:gap-0 gap-5 py-5 `}>
-      <div className="flex-1 sm:space-y-1 max-w-full overflow-x-auto overflow-y-hidden ">
-        <div className="text-slate-900 pb-1 sm:pb-0   flex items-center gap-2 ">
-            {/* <a href={`${import.meta.env.VITE_REACT_SUBDOMAIN}/${shortUrl}`}
-                target="_blank"
-                className=" text-[17px]  font-montserrat font-[600] text-linkColor ">
-                {subDomain + "/" + `${shortUrl}`}
-            </a> */}
-
+        <div className="text-slate-900 pb-1 sm:pb-0 flex items-center gap-2">
             <Link
-              target='_'
-              className='text-[17px]  font-montserrat font-[600] text-linkColor'
-              to={import.meta.env.VITE_REACT_FRONT_END_URL + "/s/" + `${shortUrl}`}>
-                  {subDomain + "/s/" + `${shortUrl}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[17px] font-montserrat font-[600] text-linkColor hover:underline flex items-center gap-1.5"
+              to={"/s/" + `${shortUrl}`}
+            >
+              <span>{subDomain + "/s/" + `${shortUrl}`}</span>
+              <FaExternalLinkAlt className="text-linkColor text-sm" />
             </Link>
-            <FaExternalLinkAlt className="text-linkColor" />
-            </div>
+        </div>
 
         <div className="flex items-center gap-1 ">
-            <h3 className=" text-slate-700 font-[400] text-[17px] ">
+            <h3 className=" text-slate-700 font-[400] text-[17px] truncate max-w-md" title={originalUrl}>
               {originalUrl}
             </h3>
           </div>
 
-          <div className="flex   items-center gap-8 pt-6 ">
-            <div className="flex gap-1  items-center font-semibold  text-green-800">
+          <div className="flex items-center gap-8 pt-6 ">
+            <div className="flex gap-1 items-center font-semibold text-green-800">
               <span>
                 <MdOutlineAdsClick className="text-[22px] me-1" />
               </span>
@@ -114,13 +109,16 @@ const ShortenItem = ({ originalUrl, shortUrl, clickCount, createdDate }) => {
             </div>
         </div>
 
-        <div className="flex  flex-1  sm:justify-end items-center gap-4">
+        <div className="flex flex-1 sm:justify-end items-center gap-4">
             <CopyToClipboard
-                onCopy={() => setIsCopied(true)}
-                text={`${import.meta.env.VITE_REACT_FRONT_END_URL + "/s/" + `${shortUrl}`}`}
+                onCopy={() => {
+                  setIsCopied(true);
+                  setTimeout(() => setIsCopied(false), 2000);
+                }}
+                text={`${window.location.origin}/s/${shortUrl}`}
             >
-                <div className="flex cursor-pointer gap-1 items-center bg-btnColor py-2  font-semibold shadow-md shadow-slate-500 px-6 rounded-md text-white ">
-                <button className="">{isCopied ? "Copied" : "Copy"}</button>
+                <div className="flex cursor-pointer gap-1 items-center bg-btnColor py-2 font-semibold shadow-md shadow-slate-500 px-6 rounded-md text-white hover:opacity-90 transition-opacity">
+                <button type="button" className="">{isCopied ? "Copied" : "Copy"}</button>
                 {isCopied ? (
                     <LiaCheckSolid className="text-md" />
                 ) : (

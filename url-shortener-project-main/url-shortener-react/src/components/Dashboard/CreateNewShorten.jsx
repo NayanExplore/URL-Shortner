@@ -41,9 +41,9 @@ const CreateNewShorten = ({ setOpen, refetch }) => {
                 className: "mb-5",
                 duration: 3000,
             });
-          });
-
-          // await refetch();
+          if (refetch) {
+            await refetch();
+          }
           reset();
           setOpen(false);
     } catch (error) {
@@ -90,6 +90,7 @@ const CreateNewShorten = ({ setOpen, refetch }) => {
         {!loading && (
           <Tooltip title="Close">
             <button
+              type="button"
               disabled={loading}
               onClick={() => setOpen(false)}
               className=" absolute right-2 top-2  "

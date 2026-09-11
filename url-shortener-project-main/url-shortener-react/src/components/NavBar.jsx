@@ -32,6 +32,7 @@ const Navbar = () => {
         >
           <li className="hover:text-btnColor font-[500]  transition-all duration-150">
             <Link
+              onClick={() => setNavbarOpen(false)}
               className={`${
                 path === "/" ? "text-white font-semibold" : "text-gray-200"
               }`}
@@ -42,6 +43,7 @@ const Navbar = () => {
           </li>
           <li className="hover:text-btnColor font-[500]  transition-all duration-150">
             <Link
+              onClick={() => setNavbarOpen(false)}
               className={`${
                 path === "/about" ? "text-white font-semibold" : "text-gray-200"
               }`}
@@ -53,6 +55,7 @@ const Navbar = () => {
           {token && (
             <li className="hover:text-btnColor font-[500]  transition-all duration-150">
             <Link
+              onClick={() => setNavbarOpen(false)}
               className={`${
                 path === "/dashboard" ? "text-white font-semibold" : "text-gray-200"
               }`}
@@ -63,20 +66,30 @@ const Navbar = () => {
           </li>
           )}
           {!token && (
-            <Link to="/register">
-              <li className=" sm:ml-0 -ml-1 bg-rose-700 text-white  cursor-pointer w-24 text-center font-semibold px-2 py-2 rounded-md  hover:text-slate-300   transition-all duration-150">
-                SignUp
-              </li>
-            </Link>
-            )}
+            <div className="flex sm:flex-row flex-col gap-2 items-center">
+              <Link to="/login" onClick={() => setNavbarOpen(false)}>
+                <li className="sm:ml-0 -ml-1 border border-white text-white cursor-pointer w-24 text-center font-semibold px-2 py-1.5 rounded-md hover:bg-white hover:text-slate-800 transition-all duration-150">
+                  Login
+                </li>
+              </Link>
+              <Link to="/register" onClick={() => setNavbarOpen(false)}>
+                <li className="sm:ml-0 -ml-1 bg-rose-700 text-white cursor-pointer w-24 text-center font-semibold px-2 py-1.5 rounded-md hover:bg-rose-800 transition-all duration-150">
+                  SignUp
+                </li>
+              </Link>
+            </div>
+          )}
 
           {token && (
             <button
-             onClick={onLogOutHandler}
-             className="sm:ml-0 -ml-1 bg-rose-700 text-white  cursor-pointer w-24 text-center font-semibold px-2 py-2 rounded-md  hover:text-slate-300   transition-all duration-150">
+             onClick={() => {
+               setNavbarOpen(false);
+               onLogOutHandler();
+             }}
+             className="sm:ml-0 -ml-1 bg-rose-700 text-white cursor-pointer w-24 text-center font-semibold px-2 py-1.5 rounded-md hover:bg-rose-800 transition-all duration-150">
               LogOut
             </button>
-            )}
+          )}
         </ul>
         <button
           onClick={() => setNavbarOpen(!navbarOpen)}
