@@ -135,8 +135,6 @@ const ShortenItem = ({ originalUrl, shortUrl, clickCount, createdDate }) => {
                 <MdAnalytics className="text-md" />
           </div>
           </div>
-        </div>
-    <React.Fragment>
         <div className={`${
             analyticToggle ? "flex" : "hidden"
           }  max-h-96 sm:mt-0 mt-5 min-h-96 relative  border-t-2 w-[100%] overflow-hidden `}>
@@ -171,7 +169,6 @@ const ShortenItem = ({ originalUrl, shortUrl, clickCount, createdDate }) => {
                     </>
                     )}
         </div>
-    </React.Fragment>
     </div>
   )
 }

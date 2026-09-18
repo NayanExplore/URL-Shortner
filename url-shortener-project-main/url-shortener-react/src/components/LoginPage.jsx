@@ -19,7 +19,6 @@ const LoginPage = () => {
     } = useForm({
         defaultValues: {
             username: "",
-            email: "",
             password: "",
         },
         mode: "onTouched",
