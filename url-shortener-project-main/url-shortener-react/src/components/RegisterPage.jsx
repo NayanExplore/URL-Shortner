@@ -25,17 +25,26 @@ const RegisterPage = () => {
 
     const registerHandler = async (data) => {
         setLoader(true);
+        // Show a message if the server takes a long time to wake up (Render free tier)
+        const coldStartTimer = setTimeout(() => {
+            toast.loading("Waking up the server, this might take up to a minute...", { id: "coldStart" });
+        }, 3000);
+
         try {
             const { data: response } = await api.post(
                 "/api/auth/public/register",
                 data
             );
+            clearTimeout(coldStartTimer);
+            toast.dismiss("coldStart");
             reset();
             navigate("/login");
-            toast.success("Registeration Successful!")
+            toast.success("Registeration Successful!");
         } catch (error) {
+            clearTimeout(coldStartTimer);
+            toast.dismiss("coldStart");
             console.log(error);
-            toast.error("Registeration Failed!")
+            toast.error("Registeration Failed! Please try again.");
         } finally {
             setLoader(false);
         }

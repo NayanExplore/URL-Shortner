@@ -26,11 +26,18 @@ const LoginPage = () => {
 
     const loginHandler = async (data) => {
         setLoader(true);
+        // Show a message if the server takes a long time to wake up (Render free tier)
+        const coldStartTimer = setTimeout(() => {
+            toast.loading("Waking up the server, this might take up to a minute...", { id: "coldStart" });
+        }, 3000);
+
         try {
             const { data: response } = await api.post(
                 "/api/auth/public/login",
                 data
             );
+            clearTimeout(coldStartTimer);
+            toast.dismiss("coldStart");
             console.log(response.token);
             setToken(response.token);
             localStorage.setItem("JWT_TOKEN", JSON.stringify(response.token));
@@ -38,8 +45,10 @@ const LoginPage = () => {
             reset();
             navigate("/dashboard");
         } catch (error) {
+            clearTimeout(coldStartTimer);
+            toast.dismiss("coldStart");
             console.log(error);
-            toast.error("Login Failed!")
+            toast.error("Login Failed! Please try again.")
         } finally {
             setLoader(false);
         }
