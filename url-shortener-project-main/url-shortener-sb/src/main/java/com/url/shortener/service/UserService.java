@@ -38,8 +38,12 @@ public class UserService {
     }
 
     public User findByUsername(String name) {
-        return userRepository.findByUsername(name).orElseThrow(
+        return userRepository.findFirstByUsername(name).orElseThrow(
                 () -> new UsernameNotFoundException("User not found with username: " + name)
         );
+    }
+
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 }

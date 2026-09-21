@@ -25,6 +25,10 @@ public class AuthController {
 
     @PostMapping("/public/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
+        if (userService.existsByUsername(registerRequest.getUsername())) {
+            return ResponseEntity.badRequest().body("Username is already taken");
+        }
+
         User user = new User();
         user.setUsername(registerRequest.getUsername());
         user.setPassword(registerRequest.getPassword());
