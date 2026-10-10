@@ -1,3 +1,4 @@
+
 package com.url.shortener.repository;
 
 import com.url.shortener.models.ClickEvent;
